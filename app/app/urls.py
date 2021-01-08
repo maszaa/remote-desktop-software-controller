@@ -16,6 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from app.models import Software
+from app.views import WindowView
+
 urlpatterns = [
     path("admin/", admin.site.urls),
 ]
+
+for software in Software.objects.all().prefetch_related("windows"):
+    for window in software.windows.all():
+        urlpatterns.append(
+            path(
+                f"{software.name}/{window.title}/",
+                WindowView.as_view(),
+                name=f"{software.name}: {window.title}",
+            )
+        )
