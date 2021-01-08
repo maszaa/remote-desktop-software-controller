@@ -1,0 +1,236 @@
+[
+{
+    "model": "app.software",
+    "pk": 1,
+    "fields": {
+        "name": "GLM"
+    }
+},
+{
+    "model": "app.window",
+    "pk": 1,
+    "fields": {
+        "title": "GLM4",
+        "software": 1,
+        "needs_clicking_center": true
+    }
+},
+{
+    "model": "app.commandgroup",
+    "pk": 1,
+    "fields": {
+        "name": "Volume",
+        "order": 0,
+        "window": 1
+    }
+},
+{
+    "model": "app.commandgroup",
+    "pk": 2,
+    "fields": {
+        "name": "Mute",
+        "order": 1,
+        "window": 1
+    }
+},
+{
+    "model": "app.commandgroup",
+    "pk": 3,
+    "fields": {
+        "name": "Group",
+        "order": 2,
+        "window": 1
+    }
+},
+{
+    "model": "app.key",
+    "pk": 1,
+    "fields": {
+        "key": "{Up}"
+    }
+},
+{
+    "model": "app.key",
+    "pk": 2,
+    "fields": {
+        "key": "{Down}"
+    }
+},
+{
+    "model": "app.key",
+    "pk": 3,
+    "fields": {
+        "key": "{Left}"
+    }
+},
+{
+    "model": "app.key",
+    "pk": 4,
+    "fields": {
+        "key": "{Right}"
+    }
+},
+{
+    "model": "app.key",
+    "pk": 5,
+    "fields": {
+        "key": "{Space}"
+    }
+},
+{
+    "model": "app.command",
+    "pk": 1,
+    "fields": {
+        "name": "- 10 dB",
+        "order": 1,
+        "command_group": 1,
+        "key": 2,
+        "multiplier": 20,
+        "free_text": ""
+    }
+},
+{
+    "model": "app.command",
+    "pk": 2,
+    "fields": {
+        "name": "- 5 dB",
+        "order": 2,
+        "command_group": 1,
+        "key": 2,
+        "multiplier": 10,
+        "free_text": ""
+    }
+},
+{
+    "model": "app.command",
+    "pk": 3,
+    "fields": {
+        "name": "- 3 dB",
+        "order": 3,
+        "command_group": 1,
+        "key": 2,
+        "multiplier": 6,
+        "free_text": ""
+    }
+},
+{
+    "model": "app.command",
+    "pk": 4,
+    "fields": {
+        "name": "- 2 dB",
+        "order": 4,
+        "command_group": 1,
+        "key": 2,
+        "multiplier": 4,
+        "free_text": ""
+    }
+},
+{
+    "model": "app.command",
+    "pk": 5,
+    "fields": {
+        "name": "-1 dB",
+        "order": 5,
+        "command_group": 1,
+        "key": 2,
+        "multiplier": 2,
+        "free_text": ""
+    }
+},
+{
+    "model": "app.command",
+    "pk": 6,
+    "fields": {
+        "name": "+ 1 dB",
+        "order": 6,
+        "command_group": 1,
+        "key": 1,
+        "multiplier": 2,
+        "free_text": ""
+    }
+},
+{
+    "model": "app.command",
+    "pk": 7,
+    "fields": {
+        "name": "+ 2 dB",
+        "order": 7,
+        "command_group": 1,
+        "key": 1,
+        "multiplier": 4,
+        "free_text": ""
+    }
+},
+{
+    "model": "app.command",
+    "pk": 8,
+    "fields": {
+        "name": "+ 3 dB",
+        "order": 8,
+        "command_group": 1,
+        "key": 1,
+        "multiplier": 6,
+        "free_text": ""
+    }
+},
+{
+    "model": "app.command",
+    "pk": 9,
+    "fields": {
+        "name": "+ 5 dB",
+        "order": 9,
+        "command_group": 1,
+        "key": 1,
+        "multiplier": 10,
+        "free_text": ""
+    }
+},
+{
+    "model": "app.command",
+    "pk": 10,
+    "fields": {
+        "name": "+ 10 dB",
+        "order": 10,
+        "command_group": 1,
+        "key": 1,
+        "multiplier": 20,
+        "free_text": ""
+    }
+},
+{
+    "model": "app.command",
+    "pk": 11,
+    "fields": {
+        "name": "Mute/Unmute",
+        "order": 0,
+        "command_group": 2,
+        "key": 5,
+        "multiplier": 1,
+        "free_text": ""
+    }
+},
+{
+    "model": "app.command",
+    "pk": 12,
+    "fields": {
+        "name": "Previous",
+        "order": 1,
+        "command_group": 3,
+        "key": 3,
+        "multiplier": 1,
+        "free_text": ""
+    }
+},
+{
+    "model": "app.command",
+    "pk": 13,
+    "fields": {
+        "name": "Next",
+        "order": 2,
+        "command_group": 3,
+        "key": 4,
+        "multiplier": 1,
+        "free_text": ""
+    }
+}
+]
