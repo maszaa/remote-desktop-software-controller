@@ -1,0 +1,5 @@
+black
+isort
+pylint
+pylint-django
+wheel
