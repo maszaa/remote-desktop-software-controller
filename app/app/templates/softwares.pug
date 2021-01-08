@@ -1,0 +1,11 @@
+extends base.pug
+
+block content
+    h1 Available software windows
+
+    each software in object_list
+        h2=software.name
+            ul
+                each window in software.windows.all
+                    li
+                        a(href=("/" + software.name + "/" + window.title + "/"))=window.title

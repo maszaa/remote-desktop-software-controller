@@ -19,10 +19,11 @@ from django.contrib import admin
 from django.urls import path
 
 from app.models import Software
-from app.views import WindowView
+from app.views import SoftwareListView, WindowView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", SoftwareListView.as_view(), name="Software window list"),
 ]
 
 if not set(sys.argv).intersection(set(["makemigrations", "migrate"])):
@@ -32,6 +33,6 @@ if not set(sys.argv).intersection(set(["makemigrations", "migrate"])):
                 path(
                     f"{software.name}/{window.title}/",
                     WindowView.as_view(),
-                    name=f"{software.name} - {window.title}",
+                    name=f"Software window {software.name} - {window.title}",
                 )
             )
