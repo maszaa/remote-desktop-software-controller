@@ -1,10 +1,11 @@
-title="RDSC"
+extends base.pug
 
-h1=window.software.name
-h2=window.title
+block content
+    h1=window.software.name
+    h2=window.title
 
-form(method="post") {% csrf_token %}
-    each command_group in window.command_groups.all
-        h3=command_group.name
-        each command in command_group.commands.all
-            input(type="submit" name="command" value=command.name)
+    form(method="post") {% csrf_token %}
+        each command_group in window.command_groups.all
+            h3=command_group.name
+            each command in command_group.commands.all
+                input(type="submit" name="command" value=command.name)
