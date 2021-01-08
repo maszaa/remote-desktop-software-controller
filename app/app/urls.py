@@ -13,6 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import sys
+
 from django.contrib import admin
 from django.urls import path
 
@@ -23,12 +25,13 @@ urlpatterns = [
     path("admin/", admin.site.urls),
 ]
 
-for software in Software.objects.all().prefetch_related("windows"):
-    for window in software.windows.all():
-        urlpatterns.append(
-            path(
-                f"{software.name}/{window.title}/",
-                WindowView.as_view(),
-                name=f"{software.name} - {window.title}",
+if not set(sys.argv).intersection(set(["makemigrations", "migrate"])):
+    for software in Software.objects.all().prefetch_related("windows"):
+        for window in software.windows.all():
+            urlpatterns.append(
+                path(
+                    f"{software.name}/{window.title}/",
+                    WindowView.as_view(),
+                    name=f"{software.name} - {window.title}",
+                )
             )
-        )
