@@ -8,3 +8,7 @@ a {
     color: #378afc;
     text-decoration: none;
 }
+
+input {
+    margin: 5px;
+}
