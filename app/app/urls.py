@@ -29,6 +29,6 @@ for software in Software.objects.all().prefetch_related("windows"):
             path(
                 f"{software.name}/{window.title}/",
                 WindowView.as_view(),
-                name=f"{software.name}: {window.title}",
+                name=f"{software.name} - {window.title}",
             )
         )
