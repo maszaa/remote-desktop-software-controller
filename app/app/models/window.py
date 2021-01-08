@@ -8,6 +8,7 @@ class Window(models.Model):
     software = models.ForeignKey(
         Software, on_delete=models.RESTRICT, related_name="windows"
     )
+    needs_clicking_center = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["title"]
