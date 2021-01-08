@@ -15,7 +15,7 @@ class Command(models.Model):
     free_text = models.TextField(blank=True)
 
     class Meta:
-        ordering = ["order", "name"]
+        ordering = ["command_group__order","command_group__name", "order", "name"]
 
     def __str__(self) -> str:
         command = (
@@ -27,7 +27,7 @@ class Command(models.Model):
         window = command.command_group.window.title
         command_group = command.command_group.name
 
-        return f"{software}: {window} - {command_group}: {self.order}. {self.command}"
+        return f"{software}: {window} - {command_group}: {self.order}. {self.name} ( '{self.command}' )"
 
     @property
     def command(self) -> str:
