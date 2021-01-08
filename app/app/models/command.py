@@ -12,7 +12,7 @@ class Command(models.Model):
     )
     key = models.ForeignKey(Key, null=True, on_delete=models.RESTRICT)
     multiplier = models.PositiveIntegerField(default=1)
-    free_text = models.TextField()
+    free_text = models.TextField(blank=True)
 
     class Meta:
         ordering = ["order", "name"]
