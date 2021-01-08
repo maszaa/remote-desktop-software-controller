@@ -15,7 +15,7 @@ class Command(models.Model):
     free_text = models.TextField(blank=True)
 
     class Meta:
-        ordering = ["command_group__order","command_group__name", "order", "name"]
+        ordering = ["command_group__order", "command_group__name", "order", "name"]
 
     def __str__(self) -> str:
         command = (
@@ -31,6 +31,11 @@ class Command(models.Model):
 
     @property
     def command(self) -> str:
+        """
+        Render the command.
+
+        :return: str
+        """
         if self.key:
             return "".join(self.key.key for i in range(self.multiplier))
         return self.free_text

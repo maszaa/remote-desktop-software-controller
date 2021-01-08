@@ -1,11 +1,47 @@
-from django.http import HttpResponse
-from django.views.generic import View
+from django.db.models import QuerySet
+from django.http import HttpRequest, HttpResponse
+from django.views.generic import DetailView
 
-from app.models import Window
+from app.models import Command, Window
+from app.window_control import WindowControl
 
 
-class WindowView(View):
-    def get(self, request):
-        software, window = [text for text in request.path.split("/") if text]
-        window = Window.objects.get(title=window, software__name=software)
-        return HttpResponse(str(vars(window)))
+class WindowView(DetailView):
+    model = Window
+    template_name = "window.pug"
+
+    def get_queryset(self) -> QuerySet:
+        software, window = [text for text in self.request.path.split("/") if text]
+        return (
+            self.model.objects.filter(title=window, software__name=software)
+            .select_related("software")
+            .prefetch_related("command_groups__commands")
+        )
+
+    def get_object(self, queryset: QuerySet = None) -> Window:
+        return self.get_queryset().first()
+
+    def post(self, request: HttpRequest) -> HttpResponse:
+        self.object = self.get_object()
+        command = self._get_command()
+        WindowControl(command.command_group.window.title).send_key(
+            command.command, command.command_group.window.needs_clicking_center
+        )
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
+
+    def _get_command(self) -> Command:
+        """
+        Get command to be executed.
+
+        :return: Command
+        """
+        return (
+            Command.objects.filter(
+                name=self.request.POST["command"],
+                command_group__window__title=self.object.title,
+                command_group__window__software__name=self.object.software.name,
+            )
+            .select_related("command_group__window", "key")
+            .first()
+        )
