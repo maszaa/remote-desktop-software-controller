@@ -16,7 +16,7 @@ class ScreenshotView(View):
             if text and text != "screenshot"
         ]
         window = self.model.objects.filter(
-            title=window, software__name=software
+            slug_title=window, software__slug_name=software
         ).first()
         image_data = Screenshot(window.title).capture()
 

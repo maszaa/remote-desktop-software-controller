@@ -17,13 +17,14 @@ import sys
 
 from django.contrib import admin
 from django.urls import path
+from django.utils.text import slugify
 
 from app.models import Software
 from app.views import ScreenshotView, SoftwareListView, WindowView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", SoftwareListView.as_view(), name="Software window list"),
+    path("", SoftwareListView.as_view(), name=slugify("Software window list")),
 ]
 
 if not set(sys.argv).intersection(set(["makemigrations", "migrate"])):
@@ -32,14 +33,18 @@ if not set(sys.argv).intersection(set(["makemigrations", "migrate"])):
             urlpatterns.extend(
                 [
                     path(
-                        f"{software.name}/{window.title}/screenshot/",
+                        f"{window.get_url_path()}screenshot/",
                         ScreenshotView.as_view(),
-                        name=f"Software window screenshot {software.name} - {window.title}",
+                        name=slugify(
+                            f"Software window screenshot {software.name} - {window.title}"
+                        ),
                     ),
                     path(
-                        f"{software.name}/{window.title}/",
+                        window.get_url_path(),
                         WindowView.as_view(),
-                        name=f"Software window control {software.name} - {window.title}",
+                        name=slugify(
+                            f"Software window control {software.name} - {window.title}"
+                        ),
                     ),
                 ]
             )

@@ -44,6 +44,8 @@ One possible option is at `scripts/start.sh`
 
 For how each model is related to each other take a look at https://github.com/maszaa/remote-desktop-software-controller/tree/master/docs/rdsc_class_diagram.png
 
+`Software.slug_name` and `Window.slug_title` are auto-generated after you hit save in Django Admin. Your edits will be overwritten.
+
 
 ## TODO
 

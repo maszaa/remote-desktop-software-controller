@@ -13,7 +13,7 @@ class WindowView(DetailView):
     def get_queryset(self) -> QuerySet:
         software, window = [text for text in self.request.path.split("/") if text]
         return (
-            self.model.objects.filter(title=window, software__name=software)
+            self.model.objects.filter(slug_title=window, software__slug_name=software)
             .select_related("software")
             .prefetch_related("command_groups__commands")
         )
