@@ -28,7 +28,12 @@ SECRET_KEY = "developmentsecretkey"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [socket.gethostbyname(socket.gethostname()), "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = [
+    socket.gethostbyname(socket.gethostname()),
+    "127.0.0.1",
+    "localhost",
+    "rdsc",
+]
 
 
 # Application definition
@@ -40,9 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "django_extensions",
-
     "app",
 ]
 
