@@ -1,5 +1,6 @@
 from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse
+from django.shortcuts import redirect
 from django.views.generic import DetailView
 
 from app.models import Command, Window
@@ -27,8 +28,7 @@ class WindowView(DetailView):
         WindowControl(command.command_group.window.title).send_key(
             command.command, command.command_group.window.needs_clicking_center
         )
-        context = self.get_context_data(object=self.object)
-        return self.render_to_response(context)
+        return redirect(f"/{self.object.get_url_path()}", permanent=True)
 
     def _get_command(self) -> Command:
         """
