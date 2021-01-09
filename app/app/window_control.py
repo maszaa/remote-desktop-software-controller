@@ -7,6 +7,13 @@ class WindowControl:
         self.autohotkey = AHK()
         self.window = self.autohotkey.find_window(title=window_title.encode("utf-8"))
 
+    def activate(self) -> None:
+        """
+        Activate window i.e. bring it to front.
+        """
+        if self.window:
+            self.window.activate()
+
     def send_key(self, command: str, window_needs_clicking: bool = False) -> None:
         """
         Send given command (keys)
@@ -15,7 +22,7 @@ class WindowControl:
         :param window_needs_clicking: click the window after activating it and before sending keys
         """
         if self.window:
-            self.window.activate()
+            self.activate()
             if window_needs_clicking is True:
                 self._click_window_center()
             self._send_key(command)

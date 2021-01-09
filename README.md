@@ -26,8 +26,9 @@ Control desktop software running on your computer via web
 
 
 ## TODO
-- Render a screenshot of the current state of the software window at the software window page
 - Instructions to data model, how to setup
 - Improve error handling
 - Authentication?
 - Restricted access, by IP for example?
+- Tests?
+- More attractive UI?

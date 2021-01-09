@@ -12,3 +12,8 @@ a {
 input {
     margin: 5px;
 }
+
+img {
+    margin: 5px;
+    width: 95%;
+}

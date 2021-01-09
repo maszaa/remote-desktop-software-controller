@@ -136,5 +136,7 @@ STATIC_URL = "/static/"
 
 
 # Project settings
+SCREENSHOT_IMAGE_FORMAT = "png"
+
 LOGGER = logging.getLogger("django.server")
 LOGGER.setLevel(logging.DEBUG)

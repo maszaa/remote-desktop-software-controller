@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path
 
 from app.models import Software
-from app.views import SoftwareListView, WindowView
+from app.views import ScreenshotView, SoftwareListView, WindowView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -29,10 +29,17 @@ urlpatterns = [
 if not set(sys.argv).intersection(set(["makemigrations", "migrate"])):
     for software in Software.objects.all().prefetch_related("windows"):
         for window in software.windows.all():
-            urlpatterns.append(
-                path(
-                    f"{software.name}/{window.title}/",
-                    WindowView.as_view(),
-                    name=f"Software window {software.name} - {window.title}",
-                )
+            urlpatterns.extend(
+                [
+                    path(
+                        f"{software.name}/{window.title}/screenshot/",
+                        ScreenshotView.as_view(),
+                        name=f"Software window screenshot {software.name} - {window.title}",
+                    ),
+                    path(
+                        f"{software.name}/{window.title}/",
+                        WindowView.as_view(),
+                        name=f"Software window control {software.name} - {window.title}",
+                    ),
+                ]
             )
