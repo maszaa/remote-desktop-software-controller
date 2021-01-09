@@ -27,6 +27,17 @@ Control desktop software running on your computer via web page.
 12. Go to `http://<your selected IP>:<your port>/admin/`, login and setup your softwares. More documentation on that TBA. You can though load an example from `examples` directory and investigate.
 13. List of available software windows is available at `http://<your selected IP>:<your port>/`
 
+### Enable on startup
+
+One possible option is at `scripts/start.sh`
+
+1. You must have Git (Bash) installed on your computer
+2. Press `Windows` + `R` on your keyboard
+3. Then write `shell:startup` and hit `Enter`
+4. Folder for shortcuts to be executed in the Windows startup should open
+5. Copy `scripts/start` **shortcut** there
+6. Restart to check if the configuration works. The server should now start at Windows startup. It also fetches the latest version from Git repository and installs all Python dependencies.
+
 
 ## Documentation
 
