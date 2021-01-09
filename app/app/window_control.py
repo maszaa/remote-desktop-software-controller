@@ -7,6 +7,9 @@ class WindowControl:
         self.autohotkey = AHK()
         self.window = self.autohotkey.find_window(title=window_title.encode("utf-8"))
 
+        if not self.window:
+            settings.LOGGER.error(f"Window {window_title} not found")
+
     def activate(self) -> None:
         """
         Activate window i.e. bring it to front.

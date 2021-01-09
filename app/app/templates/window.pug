@@ -3,13 +3,17 @@ extends base.pug
 block content
     a(href="/")
         strong <--- Back
-    h1=window.software.name
-    h2=window.title
+    h1 Software: #{window.software.name}
+    h2 Window: #{window.title}
 
     form(method="post") {% csrf_token %}
-        each command_group in window.command_groups.all
-            h3=command_group.name
-            each command in command_group.commands.all
-                input(type="submit" name="command" value=command.name)
+        h3 Commands
+        ul
+            each command_group in window.command_groups.all
+                li
+                    h4=command_group.name
+                    each command in command_group.commands.all
+                        input(type="submit" name="command" value=command.name)
 
-    img(src="screenshot/")
+    h3 State of the window
+    img(src="screenshot/" alt="Screenshot of the state of the window. If not visible the system may not function properly.")

@@ -5,7 +5,8 @@ block content
 
     each software in object_list
         h2=software.name
-            ul
-                each window in software.windows.all
-                    li
+        ul
+            each window in software.windows.all
+                li
+                    h3
                         a(href=("/" + software.name + "/" + window.title + "/"))=window.title

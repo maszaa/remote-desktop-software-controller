@@ -30,6 +30,9 @@ class Screenshot:
             x1, y1 = win32gui.ClientToScreen(hwnd, (x1 - x, y1 - y))
             image = pyautogui.screenshot(region=(x, y, x1, y1))
 
+            if not image:
+                return None
+
             settings.LOGGER.warning(
                 f"Captured screenshot of window {self.window_title}"
             )

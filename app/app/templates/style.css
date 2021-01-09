@@ -15,5 +15,5 @@ input {
 
 img {
     margin: 5px;
-    width: 95%;
+    max-width: 95%;
 }
