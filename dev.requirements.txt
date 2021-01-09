@@ -3,3 +3,7 @@ isort
 pylint
 pylint-django
 wheel
+django-extensions
+pyparsing
+pydot
+graphviz

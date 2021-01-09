@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    "django_extensions",
+
     "app",
 ]
 
@@ -140,3 +143,7 @@ SCREENSHOT_IMAGE_FORMAT = "png"
 
 LOGGER = logging.getLogger("django.server")
 LOGGER.setLevel(logging.DEBUG)
+
+GRAPH_MODELS = {
+    "app_labels": ["app"],
+}

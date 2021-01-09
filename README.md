@@ -1,7 +1,8 @@
 # remote-desktop-software-controller
-Control desktop software running on your computer via web
+Control desktop software running on your computer via web page.
 
-**DISCLAIMER:** If you <u>execute, setup and use</u> this software it will operate on the windows that are open at the computer it is running on and are configured to the database. Be careful which windows and commands you configure.
+**DISCLAIMER:** If you **execute, setup and use** this software it will operate on the windows that are open at the computer it is running on and **are configured to the database**. Other windows are not accesses but be careful which windows and commands you configure.
+
 
 ## Requirements
 - Windows
@@ -9,7 +10,7 @@ Control desktop software running on your computer via web
 - AutoHotkey
 
 
-## Installation
+## Installation and usage
 1. Install AutoHotkey
 2. Install Python 3.8 (3.6 and 3.7 might work as well)
 3. `git clone https://github.com/maszaa/remote-desktop-software-controller.git`
@@ -20,15 +21,25 @@ Control desktop software running on your computer via web
     2. `pip install -r requirements.txt`
 7. Activate virtualenv: `.\virtualenv\Scripts\Activate.ps1` (assuming you use Powershell)
 8. `cd app`
-7. Create superuser: `python manage.py createsuperuser`
-8. Start web server: `python manage.py <IP of your network adapter, 0.0.0.0 for LAN access>:<port>`
-9. Go to `http://<your selected IP>:<your port>/admin/`, login and setup your softwares. More documentation on that TBA. You can though load an example from `examples` directory and investigate.
+9. Migrate database: `python manage.py migrate`
+10. Create superuser: `python manage.py createsuperuser`
+11. Start web server: `python manage.py <IP of your network adapter, 0.0.0.0 for LAN access>:<port>`
+12. Go to `http://<your selected IP>:<your port>/admin/`, login and setup your softwares. More documentation on that TBA. You can though load an example from `examples` directory and investigate.
+13. List of available software windows is available at `http://<your selected IP>:<your port>/`
+
+
+## Documentation
+
+For how each model is related to each other take a look at https://github.com/maszaa/remote-desktop-software-controller/tree/master/docs/rdsc_class_diagram.png
 
 
 ## TODO
-- Instructions to data model, how to setup
-- Improve error handling
-- Authentication?
+
+- Instructions how to setup a software window and its commands
+
+### Wishlist / Nice to have
+
 - Restricted access, by IP for example?
+- Authentication?
 - Tests?
 - More attractive UI?
