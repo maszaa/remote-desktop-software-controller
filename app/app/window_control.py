@@ -1,6 +1,5 @@
-import logging
-
 from ahk import AHK
+from django.conf import settings
 
 
 class WindowControl:
@@ -20,7 +19,7 @@ class WindowControl:
             if window_needs_clicking is True:
                 self._click_window_center()
             self._send_key(command)
-            logging.warning(f"Sent {command} to window {self.window.title}")
+            settings.LOGGER.warning(f"Sent {command} to window {self.window.title}")
 
     def _click_window_center(self) -> None:
         """
@@ -28,7 +27,7 @@ class WindowControl:
         """
         x, y, width, height = self.window.rect
         click_x, click_y = x + width / 2, y + height / 2
-        logging.warning(
+        settings.LOGGER.warning(
             f"Window {self.window.title} requires clicking it before sending keys. "
             f"Moving mouse and clicking to {click_x}, {click_y}"
         )

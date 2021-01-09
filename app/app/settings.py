@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import logging
 import os
 import socket
 from pathlib import Path
@@ -132,3 +133,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
+
+
+# Project settings
+LOGGER = logging.getLogger("django.server")
+LOGGER.setLevel(logging.DEBUG)
