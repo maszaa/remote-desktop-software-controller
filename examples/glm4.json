@@ -3,7 +3,8 @@
     "model": "app.software",
     "pk": 1,
     "fields": {
-        "name": "GLM"
+        "name": "GLM",
+        "slug_name": "glm"
     }
 },
 {
@@ -11,6 +12,7 @@
     "pk": 1,
     "fields": {
         "title": "GLM4",
+        "slug_title": "glm4",
         "software": 1,
         "needs_clicking_center": true
     }
