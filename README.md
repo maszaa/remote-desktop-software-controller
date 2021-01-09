@@ -35,8 +35,9 @@ One possible option is at `scripts/start.sh`
 2. Press `Windows` + `R` on your keyboard
 3. Then write `shell:startup` and hit `Enter`
 4. Folder for shortcuts to be executed in the Windows startup should open
-5. Copy `scripts/start` **shortcut** there
-6. Restart to check if the configuration works. The server should now start at Windows startup. It also fetches the latest version from Git repository and installs all Python dependencies.
+5. Open `scripts` folder and create a shortcut for `start.sh`
+6. Copy that shortcut to Windows startup folder
+7. Restart your computer to check if the configuration works. The server should now start at Windows startup. It also fetches the latest version from Git repository, executes database migrations and installs all Python dependencies.
 
 
 ## Documentation

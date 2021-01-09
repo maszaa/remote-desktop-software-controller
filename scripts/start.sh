@@ -9,9 +9,10 @@ pip install -r dev.requirements.txt
 pip install -r requirements.txt
 
 cd app
+winpty python manage.py migrate
 
 while True
 do
-    python manage.py runserver 0.0.0.0:80
+    winpty python manage.py runserver 0.0.0.0:80
     sleep 1
 done
