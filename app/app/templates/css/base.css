@@ -1,0 +1,27 @@
+body {
+    background-color: #3c3c3c;
+    color: #ffffff;
+    font-family: Arial;
+}
+
+a {
+    color: #378afc;
+    text-decoration: none;
+}
+
+input[type=submit] {
+    background-color: #378afc;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+img {
+    margin: 5px;
+    max-width: 95%;
+}
