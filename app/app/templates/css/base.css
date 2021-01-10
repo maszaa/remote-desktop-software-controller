@@ -9,7 +9,7 @@ a {
     text-decoration: none;
 }
 
-input[type=button] {
+button {
     background-color: #378afc;
     border: none;
     border-radius: 5px;
@@ -17,13 +17,12 @@ input[type=button] {
     font-size: 14px;
     font-weight: bold;
     padding: 10px 20px;
-    margin: 4px 2px;
     cursor: pointer;
 }
 
 img {
-    margin: 5px;
-    max-width: 95%;
+    margin: 0 5px;
+    max-width: 97.5%;
 }
 
 #command-ok {
@@ -32,4 +31,28 @@ img {
 
 #command-error {
     color: #E83330;
+}
+
+h1.software-window {
+    margin-top: 0;
+}
+
+.material-icons {
+    font-size: 2em;
+    float: right;
+}
+
+.grid {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(5, auto);
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.column {
+    flex: 50%;
 }

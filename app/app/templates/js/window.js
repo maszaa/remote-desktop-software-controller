@@ -21,9 +21,9 @@ function resetCommandStatus() {
 
 function setCommandStatus(status, command, commandOk, commandError) {
     if ([200, 201, 204].includes(status)) {
-        commandOk.textContent = `Command ${command} OK`;
+        commandOk.textContent = `${command} OK`;
     } else {
-        commandError.textContent = `Command ${command} not OK`;
+        commandError.textContent = `${command} FAIL`;
     }
 }
 

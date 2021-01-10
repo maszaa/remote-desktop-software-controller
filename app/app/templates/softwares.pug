@@ -5,8 +5,9 @@ block content
 
     each software in object_list
         h2=software.name
-        ul
-            each window in software.windows.all
-                li
-                    h3
-                        a(href=("/" + software.slug_name + "/" + window.slug_title + "/"))=window.title
+
+        each window in software.windows.all
+            h3
+                div.grid
+                    a(href=("/" + software.slug_name + "/" + window.slug_title + "/"))
+                        button=window.title

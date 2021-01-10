@@ -6,21 +6,25 @@ block scripts
         include js/window.js
 
 block content
-    a(href="/")
-        strong <--- Back
-    h1 Software: #{window.software.name}
-    h2 Window: #{window.title}
+    div.row
+        div.column
+            h1.software-window #{window.software.name}: #{window.title}
+        div.column
+            a(href="/")
+                i.material-icons menu
 
-    h3="Commands: "
-        span#command-ok
-        span#command-error
-
-    ul
-        each command_group in window.command_groups.all
-            li
+    div.row
+        div.column
+            each command_group in window.command_groups.all
                 h4=command_group.name
-                each command in command_group.commands.all
-                    input(type="button" name="command" value=command.name onclick=("sendCommand('" + command.name + "')"))
 
-    h3 State of the window
-    img(id="screenshot" src="screenshot/" alt="Screenshot of the state of the window. If not visible the system may not function properly.")
+                div.grid
+                    each command in command_group.commands.all
+                        button(onclick=("sendCommand('" + command.name + "')"))=command.name
+
+        div.column
+            h4="Status | Command: "
+                span#command-ok
+                span#command-error
+
+            img(id="screenshot" src="screenshot/" alt="Screenshot of the state of the window. If not visible the system may not function properly.")
