@@ -12,9 +12,11 @@ class WindowView(DetailView):
     template_name = "window.pug"
 
     def get_queryset(self) -> QuerySet:
-        software, window = [text for text in self.request.path.split("/") if text]
         return (
-            self.model.objects.filter(slug_title=window, software__slug_name=software)
+            self.model.objects.filter(
+                slug_title=self.kwargs.get("window"),
+                software__slug_name=self.kwargs.get("software"),
+            )
             .select_related("software")
             .prefetch_related("command_groups__commands")
         )
@@ -22,7 +24,7 @@ class WindowView(DetailView):
     def get_object(self, queryset: QuerySet = None) -> Window:
         return self.get_queryset().first()
 
-    def post(self, request: HttpRequest) -> HttpResponse:
+    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         self.object = self.get_object()
         command = self._get_command()
         WindowControl(command.command_group.window.title).send_key(

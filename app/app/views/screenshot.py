@@ -9,12 +9,7 @@ from app.screenshot import Screenshot
 class ScreenshotView(View):
     model = Window
 
-    def get(self, request):
-        software, window = [
-            text
-            for text in self.request.path.split("/")
-            if text and text != "screenshot"
-        ]
+    def get(self, request: HttpRequest, software: str, window: str) -> HttpResponse:
         window = self.model.objects.filter(
             slug_title=window, software__slug_name=software
         ).first()
