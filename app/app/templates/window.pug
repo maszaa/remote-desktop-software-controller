@@ -1,19 +1,26 @@
 extends base.pug
 
+block scripts
+    script(src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" type="application/javascript")
+    script(type="application/javascript")
+        include js/window.js
+
 block content
     a(href="/")
         strong <--- Back
     h1 Software: #{window.software.name}
     h2 Window: #{window.title}
 
-    form(method="post") {% csrf_token %}
-        h3 Commands
-        ul
-            each command_group in window.command_groups.all
-                li
-                    h4=command_group.name
-                    each command in command_group.commands.all
-                        input(type="submit" name="command" value=command.name)
+    h3="Commands: "
+        span#command-ok
+        span#command-error
+
+    ul
+        each command_group in window.command_groups.all
+            li
+                h4=command_group.name
+                each command in command_group.commands.all
+                    input(type="button" name="command" value=command.name onclick=("sendCommand('" + command.name + "')"))
 
     h3 State of the window
-    img(src="screenshot/" alt="Screenshot of the state of the window. If not visible the system may not function properly.")
+    img(id="screenshot" src="screenshot/" alt="Screenshot of the state of the window. If not visible the system may not function properly.")

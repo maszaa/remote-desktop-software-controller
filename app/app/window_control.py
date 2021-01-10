@@ -1,3 +1,5 @@
+from typing import Optional
+
 from ahk import AHK
 from django.conf import settings
 
@@ -17,12 +19,15 @@ class WindowControl:
         if self.window:
             self.window.activate()
 
-    def send_key(self, command: str, window_needs_clicking: bool = False) -> None:
+    def send_key(
+        self, command: str, window_needs_clicking: bool = False
+    ) -> Optional[bool]:
         """
         Send given command (keys)
 
         :param command: keys to send
         :param window_needs_clicking: click the window after activating it and before sending keys
+        :return: True if keys were sent to the window
         """
         if self.window:
             self.activate()
@@ -30,6 +35,7 @@ class WindowControl:
                 self._click_window_center()
             self._send_key(command)
             settings.LOGGER.warning(f"Sent {command} to window {self.window.title}")
+            return True
 
     def _click_window_center(self) -> None:
         """

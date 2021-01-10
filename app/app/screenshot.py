@@ -1,5 +1,6 @@
 import io
 import logging
+from typing import Optional
 
 import pyautogui
 import win32gui
@@ -14,11 +15,11 @@ class Screenshot:
         self.window_title = window_title
         self.window_control = WindowControl(window_title)
 
-    def capture(self) -> bytes:
+    def capture(self) -> Optional[bytes]:
         """
         Capture screenshot from window and return the image as bytes
 
-        :return: screenshot image as bytes
+        :return: screenshot image as bytes if screenshot was captured
         """
         self.window_control.activate()
         hwnd = win32gui.FindWindow(None, self.window_title)

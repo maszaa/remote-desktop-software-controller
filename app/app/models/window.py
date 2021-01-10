@@ -21,11 +21,3 @@ class Window(models.Model):
     def save(self, *args, **kwargs):
         self.slug_title = slugify(self.title)
         super().save(*args, **kwargs)
-
-    def get_url_path(self) -> str:
-        """
-        Returns url path to this Window.
-
-        :return: str
-        """
-        return f"{self.software.slug_name}/{self.slug_title}/"

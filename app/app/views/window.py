@@ -27,10 +27,14 @@ class WindowView(DetailView):
     def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         self.object = self.get_object()
         command = self._get_command()
-        WindowControl(command.command_group.window.title).send_key(
+        sent = WindowControl(command.command_group.window.title).send_key(
             command.command, command.command_group.window.needs_clicking_center
         )
-        return redirect(f"/{self.object.get_url_path()}", permanent=True)
+
+        if sent:
+            return HttpResponse(status=204)
+        else:
+            return HttpResponse(status=500)
 
     def _get_command(self) -> Command:
         """

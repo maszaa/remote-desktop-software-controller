@@ -9,7 +9,7 @@ a {
     text-decoration: none;
 }
 
-input[type=submit] {
+input[type=button] {
     background-color: #378afc;
     border: none;
     border-radius: 5px;
@@ -24,4 +24,12 @@ input[type=submit] {
 img {
     margin: 5px;
     max-width: 95%;
+}
+
+#command-ok {
+    color: #0BAB32;
+}
+
+#command-error {
+    color: #E83330;
 }
