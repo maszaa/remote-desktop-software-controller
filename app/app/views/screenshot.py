@@ -11,14 +11,22 @@ class ScreenshotView(LoginRequiredMixin, View):
     model = Window
 
     def get(self, request: HttpRequest, software: str, window: str) -> HttpResponse:
-        window = self.model.objects.filter(
-            slug_title=window, software__slug_name=software
-        ).first()
-        image_data = Screenshot(window.title).capture()
+        try:
+            window = self.model.objects.filter(
+                slug_title=window, software__slug_name=software
+            ).first()
+            image_data = Screenshot(window.title).capture()
 
-        if not image_data:
-            raise Http404("Window not open or screenshot not captured for some reason")
+            if not image_data:
+                raise Http404(
+                    "Window not open or screenshot not captured for some reason"
+                )
 
-        return HttpResponse(
-            image_data, content_type=f"image/{settings.SCREENSHOT_IMAGE_FORMAT}"
-        )
+            return HttpResponse(
+                image_data, content_type=f"image/{settings.SCREENSHOT_IMAGE_FORMAT}"
+            )
+        except Http404:
+            raise
+        except Exception as e:
+            settings.LOGGER(e)
+            return HttpResponse(str(e), status=500)

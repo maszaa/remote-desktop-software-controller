@@ -19,11 +19,11 @@ function resetCommandStatus() {
     return [commandOk, commandError]
 }
 
-function setCommandStatus(status, command, commandOk, commandError) {
-    if ([200, 201, 204].includes(status)) {
+function setCommandStatus(isOk, status, command, commandOk, commandError) {
+    if (isOk) {
         commandOk.textContent = `${command} OK`;
     } else {
-        commandError.textContent = `${command} FAIL`;
+        commandError.textContent = `${command} FAIL - ${status}`;
     }
 }
 
@@ -38,20 +38,25 @@ async function sendCommand(command) {
     const form = new FormData();
     form.set("command", command);
 
-    const response = await fetch(
-        "",
-        {
-            method: "POST",
-            mode: "cors",
-            headers: {
-                "X-CSRFToken": Cookies.get("csrftoken")
-            },
-            body: form
-        }
-    );
+    try {
+        const response = await fetch(
+            "",
+            {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "X-CSRFToken": Cookies.get("csrftoken")
+                },
+                body: form
+            }
+        )
+        const responseData = await response.json();
 
-    setCommandStatus(response.status, command, commandOk, commandError);
-    setScreenshotSrc();
+        setCommandStatus(response.ok, responseData, command, commandOk, commandError);
+        setScreenshotSrc();
+    } catch (err) {
+        setCommandStatus(false, err.toString(), command, commandOk, commandError);
+    }
 }
 
 window.onload = setScreenShotUrl;

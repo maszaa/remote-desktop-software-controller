@@ -19,9 +19,7 @@ class WindowControl:
         if self.window:
             self.window.activate()
 
-    def send_key(
-        self, command: str, window_needs_clicking: bool = False
-    ) -> Optional[bool]:
+    def send_key(self, command: str, window_needs_clicking: bool = False) -> bool:
         """
         Send given command (keys)
 
@@ -36,6 +34,7 @@ class WindowControl:
             self._send_key(command)
             settings.LOGGER.warning(f"Sent {command} to window {self.window.title}")
             return True
+        return False
 
     def _click_window_center(self) -> None:
         """
