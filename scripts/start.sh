@@ -9,7 +9,11 @@ pip install -r dev.requirements.txt
 pip install -r requirements.txt
 
 cd app
-winpty python manage.py migrate
+
+SECRET_KEY="secretkey.txt"
+test -f $SECRET_KEY || python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())" > $SECRET_KEY
+
+winpty python manage.py migrate --noinput
 
 while True
 do
