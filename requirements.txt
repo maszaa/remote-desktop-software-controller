@@ -3,4 +3,5 @@ Django==3.1.5
 PyAutoGUI==0.9.52
 pywin32==300
 pypugjs==5.9.8
+waitress==1.4.4
 whitenoise==5.2.0

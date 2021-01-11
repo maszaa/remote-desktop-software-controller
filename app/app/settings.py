@@ -27,7 +27,7 @@ with open("secretkey.txt", "r") as f:
     SECRET_KEY = f.read()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     socket.gethostbyname(socket.gethostname()),

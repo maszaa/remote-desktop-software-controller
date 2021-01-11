@@ -18,6 +18,6 @@ winpty python manage.py collectstatic --noinput
 
 while True
 do
-    winpty python manage.py runserver 0.0.0.0:80
+    winpty waitress-serve --listen=0.0.0.0:80 --threads=$(( $NUMBER_OF_PROCESSORS * 2 )) app.wsgi:application
     sleep 1
 done
