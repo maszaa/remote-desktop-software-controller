@@ -1,13 +1,14 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
-from django.views.generic import DetailView
+from django.views.generic import DetailView, View
 
 from app.models import Command, Window
 from app.window_control import WindowControl
 
 
-class WindowView(DetailView):
+class WindowView(LoginRequiredMixin, DetailView):
     model = Window
     template_name = "window.pug"
 

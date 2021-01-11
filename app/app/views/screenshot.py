@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpRequest, HttpResponse
 from django.views.generic import View
 
@@ -6,7 +7,7 @@ from app.models import Window
 from app.screenshot import Screenshot
 
 
-class ScreenshotView(View):
+class ScreenshotView(LoginRequiredMixin, View):
     model = Window
 
     def get(self, request: HttpRequest, software: str, window: str) -> HttpResponse:

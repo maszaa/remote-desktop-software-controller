@@ -152,3 +152,5 @@ LOGGER.setLevel(logging.DEBUG)
 GRAPH_MODELS = {
     "app_labels": ["app"],
 }
+
+LOGIN_URL = "/admin/login/"
