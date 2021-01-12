@@ -28,5 +28,5 @@ class ScreenshotView(LoginRequiredMixin, View):
         except Http404:
             raise
         except Exception as e:
-            settings.LOGGER(e)
+            settings.LOGGER.error(e)
             return HttpResponse(str(e), status=500)

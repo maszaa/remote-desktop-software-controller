@@ -23,8 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open("secretkey.txt", "r") as f:
-    SECRET_KEY = f.read()
+try:
+    with open("secretkey.txt", "r") as f:
+        SECRET_KEY = f.read()
+except IOError:
+    SECRET_KEY = "developmentsecret"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -46,7 +49,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django_extensions",
     "app",
 ]
 
@@ -155,4 +157,5 @@ GRAPH_MODELS = {
 
 LOGIN_URL = "/admin/login/"
 
-SESSION_COOKIE_AGE = 60 * 60 * 24 * 365 # One year in seconds
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 365  # One year in seconds
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
