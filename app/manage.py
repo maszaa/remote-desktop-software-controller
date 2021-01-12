@@ -7,6 +7,16 @@ from django.conf import settings
 from django.core.management import call_command
 from django.core.management.utils import get_random_secret_key
 
+# Import some 3rd party packages for pyinstaller if it's creating a package
+# Otherwise functionalities using these won't work on runtime
+if "pyinstaller" in sys.argv[0]:
+    import ahk
+    import PIL
+    import pyautogui
+    import pypugjs.ext.django.templatetags
+    import whitenoise.middleware
+    import win32gui
+
 
 def start() -> None:
     """
@@ -23,22 +33,24 @@ def start() -> None:
 
     application = get_wsgi_application()
 
+    settings.LOGGER.warning(f"{settings.APP_NAME} starting...")
+
     if os.path.isfile(settings.SECRET_KEY_FILE) is False:
         secret_key = get_random_secret_key()
         with open(settings.SECRET_KEY_FILE, "w") as f:
             f.write(secret_key)
-            print(f"SECRET_KEY_FILE {settings.SECRET_KEY_FILE} CREATED")
+            settings.LOGGER.warning(f"SECRET_KEY_FILE {settings.SECRET_KEY_FILE} CREATED")
 
-    print("MIGRATE")
+    settings.LOGGER.warning("MIGRATE")
     call_command("migrate", interactive=False)
 
-    print("COLLECTSTATIC")
+    settings.LOGGER.warning("COLLECTSTATIC")
     call_command("collectstatic", interactive=False)
 
-    print("CREATEMISSINGSUPERUSER")
+    settings.LOGGER.warning("CREATEMISSINGSUPERUSER")
     call_command("createmissingsuperuser")
 
-    print("START")
+    settings.LOGGER.warning("START")
     call_command("start", "0.0.0.0", 80, os.cpu_count() * 2)
 
 

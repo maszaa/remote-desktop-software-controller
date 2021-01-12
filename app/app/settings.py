@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import logging
 import os
 import socket
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,7 +25,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+FROZEN_EXE = getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS")
+
+APP_NAME = "RDSC"
+APP_DATA_PATH = os.path.join(os.environ.get("LOCALAPPDATA"), APP_NAME)
+
+if FROZEN_EXE and not os.path.isdir(APP_DATA_PATH):
+    os.makedirs(APP_DATA_PATH)
+
 SECRET_KEY_FILE = "secretkey.txt"
+
+if FROZEN_EXE:
+    SECRET_KEY_FILE = os.path.join(APP_DATA_PATH, SECRET_KEY_FILE)
 
 try:
     with open(SECRET_KEY_FILE, "r") as f:
@@ -101,10 +113,17 @@ WSGI_APPLICATION = "app.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+DATABASE_NAME = "db.sqlite3"
+
+if FROZEN_EXE:
+    DATABASE_NAME = os.path.join(APP_DATA_PATH, DATABASE_NAME)
+else:
+    DATABASE_NAME = os.path.join(BASE_DIR, DATABASE_NAME)
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": DATABASE_NAME,
     }
 }
 
@@ -146,7 +165,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR if not FROZEN_EXE else APP_DATA_PATH, "static")
 
 # Project settings
 SCREENSHOT_IMAGE_FORMAT = "png"

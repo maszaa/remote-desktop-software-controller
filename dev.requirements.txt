@@ -7,3 +7,4 @@ django-extensions
 pyparsing
 pydot
 graphviz
+pyinstaller

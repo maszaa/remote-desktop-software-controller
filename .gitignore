@@ -1,6 +1,9 @@
 virtualenv
+venv
 __pycache__
 db.sqlite3
 *.lnk
 secretkey.txt
 static/
+build/
+dist/
