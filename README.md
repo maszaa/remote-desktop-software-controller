@@ -31,6 +31,8 @@ Control desktop software running on your computer via web page.
 
 One possible option is at `scripts/start.sh`
 
+There is also PowerShell version at `scripts/start.ps1`
+
 1. You must have Git (Bash) installed on your computer
 2. Press `Windows` + `R` on your keyboard
 3. Then write `shell:startup` and hit `Enter`
