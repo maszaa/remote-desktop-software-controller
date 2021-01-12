@@ -154,3 +154,5 @@ GRAPH_MODELS = {
 }
 
 LOGIN_URL = "/admin/login/"
+
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 365 # One year in seconds
