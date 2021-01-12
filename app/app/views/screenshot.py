@@ -1,3 +1,5 @@
+import traceback
+
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpRequest, HttpResponse
@@ -28,5 +30,5 @@ class ScreenshotView(LoginRequiredMixin, View):
         except Http404:
             raise
         except Exception as e:
-            settings.LOGGER.error(e)
+            settings.LOGGER.error(traceback.format_exc())
             return HttpResponse(str(e), status=500)

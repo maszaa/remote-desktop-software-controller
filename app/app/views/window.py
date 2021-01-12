@@ -1,3 +1,5 @@
+import traceback
+
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet
@@ -34,7 +36,7 @@ class WindowView(LoginRequiredMixin, DetailView):
                 command.command, command.command_group.window.needs_clicking_center
             )
         except Exception as e:
-            settings.LOGGER.error(e)
+            settings.LOGGER.error(traceback.format_exc())
             return JsonResponse(str(e), status=500, safe=False)
 
         if sent is True:

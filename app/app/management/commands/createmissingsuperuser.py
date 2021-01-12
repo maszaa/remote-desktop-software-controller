@@ -8,6 +8,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if get_user_model().objects.filter(is_superuser=True).exists() is False:
-            call_command("createsuperuser", no_color=True)
+            call_command("createsuperuser")
         else:
             print("Superuser exists")

@@ -1,5 +1,4 @@
 import io
-import logging
 from typing import Optional
 
 import pyautogui
