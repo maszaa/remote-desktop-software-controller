@@ -39,7 +39,9 @@ def start() -> None:
         secret_key = get_random_secret_key()
         with open(settings.SECRET_KEY_FILE, "w") as f:
             f.write(secret_key)
-            settings.LOGGER.warning(f"SECRET_KEY_FILE {settings.SECRET_KEY_FILE} CREATED")
+            settings.LOGGER.warning(
+                f"SECRET_KEY_FILE {settings.SECRET_KEY_FILE} CREATED"
+            )
 
     settings.LOGGER.warning("MIGRATE")
     call_command("migrate", interactive=False)

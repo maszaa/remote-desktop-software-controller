@@ -1,7 +1,12 @@
+from django.core.validators import MaxValueValidator
 from django.db import models
 from django.utils.text import slugify
 
 from app.models.software import Software
+
+CLICK_POSITION_PERCENTAGE_VALIDATOR = MaxValueValidator(
+    100, message="Click position percentage must be in range of 0 to 100"
+)
 
 
 class Window(models.Model):
@@ -10,7 +15,18 @@ class Window(models.Model):
     software = models.ForeignKey(
         Software, on_delete=models.RESTRICT, related_name="windows"
     )
-    needs_clicking_center = models.BooleanField(default=False)
+    click_position_x_percentage_from_origin = models.PositiveIntegerField(
+        blank=True,
+        null=True,
+        verbose_name="X position as percentage from window origin that should be clicked",
+        validators=(CLICK_POSITION_PERCENTAGE_VALIDATOR,),
+    )
+    click_position_y_percentage_from_origin = models.PositiveIntegerField(
+        blank=True,
+        null=True,
+        verbose_name="Y position as percentage from window origin that should be clicked",
+        validators=(CLICK_POSITION_PERCENTAGE_VALIDATOR,),
+    )
 
     class Meta:
         ordering = ["title"]

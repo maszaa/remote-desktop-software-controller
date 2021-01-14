@@ -14,7 +14,8 @@
         "title": "GLM4",
         "slug_title": "glm4",
         "software": 1,
-        "needs_clicking_center": true
+        "click_position_x_percentage_from_origin": 25,
+        "click_position_y_percentage_from_origin": 75
     }
 },
 {

@@ -4,7 +4,6 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet
 from django.http import HttpRequest, JsonResponse
-from django.shortcuts import redirect
 from django.views.generic import DetailView
 
 from app.models import Command, Window
@@ -33,7 +32,9 @@ class WindowView(LoginRequiredMixin, DetailView):
             self.object = self.get_object()
             command = self._get_command()
             sent = WindowControl(command.command_group.window.title).send_key(
-                command.command, command.command_group.window.needs_clicking_center
+                command.command,
+                command.command_group.window.click_position_x_percentage_from_origin,
+                command.command_group.window.click_position_y_percentage_from_origin,
             )
         except Exception as e:
             settings.LOGGER.error(traceback.format_exc())
