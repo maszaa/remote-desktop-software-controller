@@ -14,7 +14,7 @@ button {
     border: none;
     border-radius: 5px;
     color: #ffffff;
-    font-size: 14px;
+    font-size: 0.8em;
     font-weight: bold;
     padding: 10px;
     cursor: pointer;
@@ -23,6 +23,7 @@ button {
 img {
     margin: 0 5px;
     max-width: 97.5%;
+    border: 1px solid #378afc;
 }
 
 #command-ok {
@@ -33,13 +34,30 @@ img {
     color: #E83330;
 }
 
+#toggle-commands {
+    font-size: 0.7em;
+}
+
+#toggle-commands, button {
+    margin-right: 5px;
+}
+
+#mode-disclaimer {
+    font-size: 0.5em;
+}
+
 h1.software-window {
     margin-top: 0;
+}
+
+.app-controls {
+    text-align: right
 }
 
 .material-icons {
     font-size: 2em;
     float: right;
+    margin-bottom: 5px;
 }
 
 .grid {

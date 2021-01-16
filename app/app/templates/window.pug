@@ -9,20 +9,17 @@ block content
     div.row
         div.column
             h1.software-window #{window.software.name}: #{window.title}
-        div.column
+        div.column.app-controls
             a(href="/admin/logout/")
                 i.material-icons lock_open
             a(href="/admin/")
                 i.material-icons settings
             a(href="/")
                 i.material-icons menu
+            button(id="toggle-commands" onclick="toggleCommandButtons()") Hide commands
 
     div.row
-        div.column
-            h4="Last command: "
-                span#command-ok N/A
-                span#command-error
-
+        div.column#command-buttons
             each command_group in window.command_groups.all
                 h4=command_group.name
 
@@ -43,3 +40,9 @@ block content
                 ontouchend="touchEnd(event)"
                 alt="Screenshot of the state of the window. If not visible the system may not function properly."
             )
+
+            h4="Last command: "
+                span#command-ok N/A
+                span#command-error
+
+            p#mode-disclaimer(hidden) * Zooming with mobile devices is disabled in screenshot-only mode

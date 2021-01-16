@@ -1,3 +1,6 @@
+const commandsVisibleViewport = "width=device-width, initial-scale=1.0";
+const commandsHiddenViewport = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no";
+
 let screenshotUrl = null;
 let previousMousePosition = null;
 let sendingClickOrDragCommand = false;
@@ -137,6 +140,25 @@ function touchEnd(event) {
     event.stopPropagation();
     event.preventDefault();
     sendCommand(event.changedTouches.item(0));
+}
+
+function toggleCommandButtons() {
+    const buttons = document.getElementById("command-buttons");
+    buttons.hidden = !buttons.hidden;
+
+    const toggleButton = document.getElementById("toggle-commands");
+    const viewport = document.querySelector('meta[name="viewport"]');
+    const modeDisclaimer = document.getElementById("mode-disclaimer");
+
+    if (!buttons.hidden) {
+        viewport.content = commandsVisibleViewport;
+        toggleButton.textContent = "Hide commands";
+        modeDisclaimer.hidden = true;
+    } else {
+        viewport.content = commandsHiddenViewport;
+        toggleButton.textContent = "Show commands";
+        modeDisclaimer.hidden = false;
+    }
 }
 
 window.onload = setScreenShotUrl;
