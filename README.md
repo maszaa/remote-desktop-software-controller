@@ -4,6 +4,16 @@ Control desktop software running on your computer via web page.
 **DISCLAIMER:** If you **execute, setup and use** this software it will operate on the windows that are open at the computer it is running on and **are configured to the database**. Other windows are not accesses but be careful which windows and commands you configure.
 
 
+## Features
+
+- You can define windows for softwares, command groups for windows, and commands for command groups. Command can have `free_text` which is sent as is to the software window in question. Command can also have a reference to a `Key` element and a `multiplier`. This causes `Key.key` to be sent `multiplier` times to the software window. If key reference exists it is preferred over `free_text`.
+- After defining commands you can send your keyboard key combinations to the software window by clicking buttons.
+- You can click the screenshot of the software window. That click is forwarded to the actual software window.
+- You can use mouse drag on desktop devices or move touch on mobile devices over the screenshot. That is forwarded as mouse drag to the actual software window.
+- You can switch between "show commands" and "screenshot only" modes. In the later the command buttons are hidden. It also causes the viewport scale to be set to 1.0 on mobile devices and disables zooming to prevent user from zooming the page, going over the sceenshot and not being able to zoom out or scroll to the top of the view as `preventDefault` is called for touch events to prevent the screenshot image moving while capturing touch movement. "Show commands" is the default mode on page load.
+- If only one software window is configured the software window list view takes user to the control view of that sole window.
+
+
 ## Requirements
 - Windows
 - Python
@@ -21,6 +31,15 @@ Control desktop software running on your computer via web page.
 8. List of available software windows is available at `http://<your LAN IP>/`. You must login to access.
 
 `RDSC.exe` has other commands available as well. Open Git Bash or Powershell, execute the exe and give it `--help` argument.
+
+### Enable on startup
+
+1. Create a shortcut for `RDSC.exe`.
+2. Press `Windows` + `R` on your keyboard
+3. Then write `shell:startup` and hit `Enter`
+4. Folder for shortcuts to be executed in the Windows startup should open
+5. Copy thw shortcut to Windows startup folder
+6. Restart your computer to check if the configuration works. The server should now start at Windows startup.
 
 
 ## Development installation
@@ -42,14 +61,7 @@ Control desktop software running on your computer via web page.
 
 ### Enable on startup
 
-1. Create a shortcut for `RDSC.exe`.
-2. Press `Windows` + `R` on your keyboard
-3. Then write `shell:startup` and hit `Enter`
-4. Folder for shortcuts to be executed in the Windows startup should open
-5. Copy thw shortcut to Windows startup folder
-6. Restart your computer to check if the configuration works. The server should now start at Windows startup.
-
-One other possible option is at `scripts/start.sh`
+One possible option is at `scripts/start.sh`
 
 There is also PowerShell version at `scripts/start.ps1`
 
