@@ -32,11 +32,29 @@ function setScreenshotSrc() {
     screenshotElement.src = `${screenshotUrl}?timestamp=${Date.now()}`;
 }
 
+function getClickedScreenshotPositionAsPercentage(event) {
+    const {naturalWidth, naturalHeight, width, height} = event.target;
+    const xMultiplier = naturalWidth / width;
+    const yMultiplier = naturalHeight / height;
+    return {
+        clickX: event.offsetX * xMultiplier / naturalWidth * 100,
+        // Invert Y coordinate
+        clickY: 100 - event.offsetY * yMultiplier / naturalHeight * 100
+    }
+}
+
 async function sendCommand(command) {
     const [commandOk, commandError] = resetCommandStatus();
 
     const form = new FormData();
-    form.set("command", command);
+    if (command instanceof MouseEvent) {
+        const {clickX, clickY} = getClickedScreenshotPositionAsPercentage(command);
+        form.set("clickX", clickX);
+        form.set("clickY", clickY);
+        command = `Click ${clickX}, ${clickY}`;
+    } else {
+        form.set("command", command);
+    }
 
     try {
         const response = await fetch(

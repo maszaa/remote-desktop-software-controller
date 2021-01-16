@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Union
 
 from ahk import AHK
 from django.conf import settings
@@ -18,6 +18,32 @@ class WindowControl:
         """
         if self.window:
             self.window.activate()
+
+    def send_click(
+        self,
+        click_position_x_percentage_from_origin: Union[int, float],
+        click_position_y_percentage_from_origin: Union[int, float],
+    ) -> bool:
+        """
+        :param click_position_x_percentage_from_origin: X position as percentage from window origin that should be clicked
+        :param click_position_y_percentage_from_origin: Y position as percentage from window origin that should be clicked
+        :return: True if click was sent to the window
+        """
+        if self.window:
+            self.activate()
+            if (
+                click_position_x_percentage_from_origin is not None
+                and click_position_y_percentage_from_origin is not None
+            ):
+                click_x, click_y = self._click_window_position(
+                    click_position_x_percentage_from_origin,
+                    click_position_y_percentage_from_origin,
+                )
+            settings.LOGGER.warning(
+                f"Clicked {click_x}, {click_y} of window {self.window.title}"
+            )
+            return True
+        return False
 
     def send_key(
         self,
@@ -54,9 +80,9 @@ class WindowControl:
         y: int,
         width: int,
         height: int,
-        click_position_x_percentage_from_origin: int = 0,
-        click_position_y_percentage_from_origin: int = 0,
-    ) -> Tuple[int, int]:
+        click_position_x_percentage_from_origin: Union[int, float] = 0,
+        click_position_y_percentage_from_origin: Union[int, float] = 0,
+    ) -> Tuple[Union[int, float], Union[int, float]]:
         """
         Calculate a screen position (x, y) that is going to be clicked.
 
@@ -75,14 +101,15 @@ class WindowControl:
 
     def _click_window_position(
         self,
-        click_position_x_percentage_from_origin: int = 0,
-        click_position_y_percentage_from_origin: int = 0,
-    ) -> None:
+        click_position_x_percentage_from_origin: Union[int, float] = 0,
+        click_position_y_percentage_from_origin: Union[int, float] = 0,
+    ) -> Tuple[Union[int, float], Union[int, float]]:
         """
         Click a position (x, y from origin) in the window.
 
         :param click_position_x_percentage_from_origin: X position as percentage from window XY origin that should be clicked, defaults to 0
         :param click_position_y_percentage_from_origin: Y position as percentage from window XY origin that should be clicked, defaults to 0
+        :return: x, y position in screen that was clicked as tuple
         """
         click_x, click_y = self._calculate_click_position(
             *self.window.rect,
@@ -93,7 +120,8 @@ class WindowControl:
             f"Window {self.window.title} requires clicking it before sending keys. "
             f"Moving mouse and clicking to {click_x}, {click_y}"
         )
-        self.autohotkey.click(click_x, click_y)
+        self.autohotkey.click(click_x, click_y, blocking=True)
+        return (click_x, click_y)
 
     def _send_key(self, command) -> None:
         """
