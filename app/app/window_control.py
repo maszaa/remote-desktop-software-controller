@@ -45,6 +45,42 @@ class WindowControl:
             return True
         return False
 
+    def send_drag(
+        self,
+        from_position_x_percentage_from_origin: Union[int, float],
+        from_position_y_percentage_from_origin: Union[int, float],
+        to_position_x_percentage_from_origin: Union[int, float],
+        to_position_y_percentage_from_origin: Union[int, float],
+    ) -> bool:
+        """
+        Drag mouse over window.
+
+        :param from_position_x_percentage_from_origin: X position as percentage from window origin from where the mouse drag should start
+        :param from_position_y_percentage_from_origin: Y position as percentage from window origin from where the mouse drag should start
+        :param from_position_x_percentage_from_origin: X position as percentage from window origin to where the mouse drag should end
+        :param from_position_y_percentage_from_origin: Y position as percentage from window origin to where the mouse drag should end
+        :return: True if mouse drag was sent to the window
+        """
+        if self.window:
+            self.activate()
+            if (
+                from_position_x_percentage_from_origin is not None
+                and from_position_y_percentage_from_origin is not None
+                and to_position_x_percentage_from_origin is not None
+                and to_position_y_percentage_from_origin is not None
+            ):
+                from_x, from_y, to_x, to_y = self._drag_mouse_inside_window(
+                    from_position_x_percentage_from_origin,
+                    from_position_y_percentage_from_origin,
+                    to_position_x_percentage_from_origin,
+                    to_position_y_percentage_from_origin,
+                )
+                settings.LOGGER.warning(
+                    f"Dragged mouse from {from_x}, {from_y} to {to_x}, {to_y} inside window {self.window.title}"
+                )
+            return True
+        return False
+
     def send_key(
         self,
         command: str,
@@ -117,11 +153,48 @@ class WindowControl:
             click_position_y_percentage_from_origin,
         )
         settings.LOGGER.warning(
-            f"Window {self.window.title} requires clicking it before sending keys. "
-            f"Moving mouse and clicking to {click_x}, {click_y}"
+            f"Moving mouse and clicking to {click_x}, {click_y} inside window {self.window.title}"
         )
         self.autohotkey.click(click_x, click_y, blocking=True)
         return (click_x, click_y)
+
+    def _drag_mouse_inside_window(
+        self,
+        from_position_x_percentage_from_origin: Union[int, float],
+        from_position_y_percentage_from_origin: Union[int, float],
+        to_position_x_percentage_from_origin: Union[int, float],
+        to_position_y_percentage_from_origin: Union[int, float],
+    ) -> Tuple[
+        Union[int, float], Union[int, float], Union[int, float], Union[int, float]
+    ]:
+        """
+        Drag mouse over window.
+
+        :param from_position_x_percentage_from_origin: X position as percentage from window origin from where the mouse drag should start
+        :param from_position_y_percentage_from_origin: Y position as percentage from window origin from where the mouse drag should start
+        :param from_position_x_percentage_from_origin: X position as percentage from window origin to where the mouse drag should end
+        :param from_position_y_percentage_from_origin: Y position as percentage from window origin to where the mouse drag should end
+        :return: drag position from x, y to x, y as tuple
+        """
+        rect = self.window.rect
+        from_x, from_y = self._calculate_click_position(
+            *rect,
+            from_position_x_percentage_from_origin,
+            from_position_y_percentage_from_origin,
+        )
+        to_x, to_y = self._calculate_click_position(
+            *rect,
+            to_position_x_percentage_from_origin,
+            to_position_y_percentage_from_origin,
+        )
+
+        settings.LOGGER.warning(
+            f"Dragging mouse from {from_x}, {from_y} to {to_x}, {to_y} inside window {self.window.title}"
+        )
+        self.autohotkey.mouse_drag(
+            to_x, to_y, from_position=(from_x, from_y), blocking=True
+        )
+        return (from_x, from_y, to_x, to_y)
 
     def _send_key(self, command) -> None:
         """

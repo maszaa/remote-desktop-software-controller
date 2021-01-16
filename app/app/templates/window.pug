@@ -33,4 +33,13 @@ block content
         div.column
             h4="Status"
 
-            img(id="screenshot" src="screenshot/" onclick="sendCommand(event)" alt="Screenshot of the state of the window. If not visible the system may not function properly.")
+            img(
+                id="screenshot"
+                src="screenshot/"
+                onclick="sendCommand(event)"
+                onmousedown="mouseDown(event)"
+                onmouseup="mouseUp(event)"
+                ontouchstart="touchStart(event)"
+                ontouchend="touchEnd(event)"
+                alt="Screenshot of the state of the window. If not visible the system may not function properly."
+            )

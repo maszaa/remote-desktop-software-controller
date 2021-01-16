@@ -85,9 +85,25 @@ class WindowView(LoginRequiredMixin, DetailView):
                 self.request.POST.get("clickX"),
                 self.request.POST.get("clickY"),
             )
+
             if click_x and click_y:
                 return self.window_control.send_click(float(click_x), float(click_y))
+            else:
+                from_x, from_y, to_x, to_y = (
+                    self.request.POST.get("fromX"),
+                    self.request.POST.get("fromY"),
+                    self.request.POST.get("toX"),
+                    self.request.POST.get("toY"),
+                )
+
+                if from_x and from_y and to_x and to_y:
+                    return self.window_control.send_drag(
+                        float(from_x),
+                        float(from_y),
+                        float(to_x),
+                        float(to_y),
+                    )
 
         raise KeyError(
-            "Either command or clickX and clickY must be present in request payload"
+            "Either command or clickX and clickY or fromX, fromY, toX and toY must be present in request payload"
         )
