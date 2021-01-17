@@ -140,7 +140,7 @@ function mouseUp(event) {
 function touchStart(event) {
     if (disableClickAndDragActions) return;
     previousMousePosition = getClickedScreenshotPositionAsPercentage(event.changedTouches.item(0));
-    eventPreventionevent(event);
+    eventPrevention(event);
 }
 
 function touchEnd(event) {
