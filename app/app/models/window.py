@@ -1,12 +1,8 @@
-from django.core.validators import MaxValueValidator
 from django.db import models
 from django.utils.text import slugify
 
 from app.models.software import Software
-
-CLICK_POSITION_PERCENTAGE_VALIDATOR = MaxValueValidator(
-    100, message="Click position percentage must be in range of 0 to 100"
-)
+from app.validators import CLICK_POSITION_PERCENTAGE_VALIDATOR
 
 
 class Window(models.Model):

@@ -7,6 +7,7 @@ Control desktop software running on your computer via web page.
 ## Features
 
 - You can define windows for softwares, command groups for windows, and commands for command groups. Command can have `free_text` which is sent as is to the software window in question. Command can also have a reference to a `Key` element and a `multiplier`. This causes `Key.key` to be sent `multiplier` times to the software window. If key reference exists it is preferred over `free_text`.
+- You can define a position (X, Y from bottom-left origin) inside window as percentage which is clicked before sending keys. This can be set to all commands (set to Window) and each command may override these values.
 - After defining commands you can send your keyboard key combinations to the software window by clicking buttons.
 - You can click the screenshot of the software window. That click is forwarded to the actual software window.
 - You can use mouse drag on desktop devices or move touch on mobile devices over the screenshot. That is forwarded as mouse drag to the actual software window.

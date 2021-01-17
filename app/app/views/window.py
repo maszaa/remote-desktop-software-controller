@@ -77,8 +77,8 @@ class WindowView(LoginRequiredMixin, DetailView):
             command = self._get_command(command)
             return self.window_control.send_key(
                 command.command,
-                command.command_group.window.click_position_x_percentage_from_origin,
-                command.command_group.window.click_position_y_percentage_from_origin,
+                command.click_position_x_percentage_from_origin,
+                command.click_position_y_percentage_from_origin,
             )
         else:
             click_x, click_y = (

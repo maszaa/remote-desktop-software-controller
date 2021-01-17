@@ -16,7 +16,7 @@ class WindowControl:
         """
         Activate window i.e. bring it to front.
         """
-        if self.window:
+        if self.window.exists:
             self.window.activate()
 
     def send_click(
@@ -29,7 +29,7 @@ class WindowControl:
         :param click_position_y_percentage_from_origin: Y position as percentage from window origin that should be clicked
         :return: True if click was sent to the window
         """
-        if self.window:
+        if self.window.exists:
             self.activate()
             if (
                 click_position_x_percentage_from_origin is not None
@@ -61,7 +61,7 @@ class WindowControl:
         :param from_position_y_percentage_from_origin: Y position as percentage from window origin to where the mouse drag should end
         :return: True if mouse drag was sent to the window
         """
-        if self.window:
+        if self.window.exists:
             self.activate()
             if (
                 from_position_x_percentage_from_origin is not None
@@ -95,7 +95,7 @@ class WindowControl:
         :param click_position_y_percentage_from_origin: Y position as percentage from window origin that should be clicked
         :return: True if keys were sent to the window
         """
-        if self.window:
+        if self.window.exists:
             self.activate()
             if (
                 click_position_x_percentage_from_origin is not None
