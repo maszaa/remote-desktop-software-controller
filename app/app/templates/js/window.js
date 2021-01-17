@@ -120,10 +120,11 @@ async function sendCommand(command) {
 
         sendingClickOrDragCommand = false;
         setCommandStatus(response.ok, responseData, command, commandOk, commandError);
-        setScreenshotSrc();
     } catch (err) {
         setCommandStatus(false, err.toString(), command, commandOk, commandError);
     }
+
+    setScreenshotSrc();
 }
 
 function eventPrevention(event) {
