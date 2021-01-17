@@ -192,5 +192,9 @@ function toggleClickAndDragActions() {
 
 window.onload = () => {
     setScreenShotUrl();
-    getScreenshotElement().addEventListener("load", () => showLoader(false));
+    const imgEventListener = () => showLoader(false);
+    const screenshot = getScreenshotElement()
+
+    screenshot.addEventListener("load", imgEventListener);
+    screenshot.addEventListener("error", imgEventListener);
 }
