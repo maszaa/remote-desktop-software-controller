@@ -7,7 +7,7 @@ block scripts
 
 block content
     div.row
-        div.column
+        div.column.title
             h1.software-window #{window.software.name}: #{window.title}
         div.column.app-controls
             a(href="/admin/logout/")
@@ -17,6 +17,7 @@ block content
             a(href="/")
                 i.material-icons menu
             button(id="toggle-commands" onclick="toggleCommandButtons()") Hide commands
+            button(id="toggle-click-and-drag" onclick="toggleClickAndDragActions()") Disable click and drag actions
 
     div.row
         div.column#command-buttons
@@ -33,7 +34,7 @@ block content
             img(
                 id="screenshot"
                 src="screenshot/"
-                onclick="sendCommand(event)"
+                onclick="mouseUp(event)"
                 onmousedown="mouseDown(event)"
                 onmouseup="mouseUp(event)"
                 ontouchstart="touchStart(event)"

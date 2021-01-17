@@ -1,9 +1,11 @@
 const commandsVisibleViewport = "width=device-width, initial-scale=1.0";
 const commandsHiddenViewport = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no";
+const blue = "#378afc";
 
 let screenshotUrl = null;
 let previousMousePosition = null;
 let sendingClickOrDragCommand = false;
+let disableClickAndDragActions = false;
 
 function getScreenshotElement() {
     return document.getElementById("screenshot");
@@ -118,27 +120,32 @@ async function sendCommand(command) {
     }
 }
 
-function mouseDown(event) {
-    previousMousePosition = getClickedScreenshotPositionAsPercentage(event)
+function eventPrevention(event) {
     event.stopPropagation();
     event.preventDefault();
 }
 
+function mouseDown(event) {
+    if (disableClickAndDragActions) return;
+    previousMousePosition = getClickedScreenshotPositionAsPercentage(event)
+    eventPrevention(event);
+}
+
 function mouseUp(event) {
-    event.stopPropagation();
-    event.preventDefault();
+    if (disableClickAndDragActions) return;
+    eventPrevention(event);
     sendCommand(event);
 }
 
 function touchStart(event) {
+    if (disableClickAndDragActions) return;
     previousMousePosition = getClickedScreenshotPositionAsPercentage(event.changedTouches.item(0));
-    event.stopPropagation();
-    event.preventDefault();
+    eventPreventionevent(event);
 }
 
 function touchEnd(event) {
-    event.stopPropagation();
-    event.preventDefault();
+    if (disableClickAndDragActions) return;
+    eventPrevention(event);
     sendCommand(event.changedTouches.item(0));
 }
 
@@ -158,6 +165,21 @@ function toggleCommandButtons() {
         viewport.content = commandsHiddenViewport;
         toggleButton.textContent = "Show commands";
         modeDisclaimer.hidden = false;
+    }
+}
+
+function toggleClickAndDragActions() {
+    const toggleButton = document.getElementById("toggle-click-and-drag");
+    const screenshot = getScreenshotElement();
+
+    disableClickAndDragActions = !disableClickAndDragActions;
+
+    if (disableClickAndDragActions) {
+        toggleButton.textContent = "Enable click and drag actions";
+        screenshot.style.borderColor = "transparent";
+    } else {
+        toggleButton.textContent = "Disable click and drag actions";
+        screenshot.style.borderColor = blue;
     }
 }
 

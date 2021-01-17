@@ -12,6 +12,7 @@ Control desktop software running on your computer via web page.
 - You can click the screenshot of the software window. That click is forwarded to the actual software window.
 - You can use mouse drag on desktop devices or move touch on mobile devices over the screenshot. That is forwarded as mouse drag to the actual software window.
 - You can switch between "show commands" and "screenshot only" modes. In the later the command buttons are hidden. It also causes the viewport scale to be set to 1.0 on mobile devices and disables zooming to prevent user from zooming the page, going over the sceenshot and not being able to zoom out or scroll to the top of the view as `preventDefault` is called for touch events to prevent the screenshot image moving while capturing touch movement. "Show commands" is the default mode on page load.
+- You can disable click and drag actions. By default those are enabled. When those are enabled the screenshot has a blue border. When disabled, the border doesn't have a border.
 - If only one software window is configured the software window list view takes user to the control view of that sole window.
 
 
