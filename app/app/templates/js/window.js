@@ -11,6 +11,10 @@ function getScreenshotElement() {
     return document.getElementById("screenshot");
 }
 
+function showLoader(show = true) {
+    document.getElementById("loader").hidden = !show;
+}
+
 function setScreenShotUrl() {
     const screenshotElement = getScreenshotElement();
     screenshotUrl = screenshotElement.src;
@@ -91,6 +95,8 @@ function createForm(command) {
 }
 
 async function sendCommand(command) {
+    showLoader();
+
     const [commandOk, commandError] = resetCommandStatus();
     let form = null;
     [form, command] = createForm(command);
@@ -183,4 +189,7 @@ function toggleClickAndDragActions() {
     }
 }
 
-window.onload = setScreenShotUrl;
+window.onload = () => {
+    setScreenShotUrl();
+    getScreenshotElement().addEventListener("load", () => showLoader(false));
+}

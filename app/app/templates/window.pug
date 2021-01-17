@@ -29,7 +29,11 @@ block content
                         button(onclick=("sendCommand('" + command.name + "')"))=command.name
 
         div.column
-            h4="Status"
+            div.row
+                div.column
+                    h4="Status"
+                div.column
+                    div#loader(hidden)
 
             img(
                 id="screenshot"
