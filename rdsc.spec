@@ -6,7 +6,11 @@ block_cipher = None
 a = Analysis(['app\\manage.py'],
              pathex=['venv\\Lib\\site-packages'],
              binaries=[],
-             datas=[('venv\\Lib\\site-packages\\ahk\\templates', 'ahk\\templates')],
+             datas=[
+                 ('venv\\Lib\\site-packages\\ahk\\templates', 'ahk\\templates'),
+                 ('LICENSE', '.'),
+                 ('README.md', '.')
+             ],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=['scripts\\pyi_rth_django.py'],
