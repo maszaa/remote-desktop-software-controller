@@ -16,17 +16,19 @@ block content
                 i.material-icons settings
             a(href="/")
                 i.material-icons menu
-            button(id="toggle-commands" onclick="toggleCommandButtons()") Hide commands
+            if window.command_groups.exists
+                button(id="toggle-commands" onclick="toggleCommandButtons()") Hide commands
             button(id="toggle-click-and-drag" onclick="toggleClickAndDragActions()") Disable click and drag actions
 
     div.row
-        div.column#command-buttons
-            each command_group in window.command_groups.all
-                h4=command_group.name
+        if window.command_groups.exists
+            div.column#command-buttons
+                each command_group in window.command_groups.all
+                    h4=command_group.name
 
-                div.grid
-                    each command in command_group.commands.all
-                        button(onclick=("sendCommand('" + command.name + "')"))=command.name
+                    div.grid
+                        each command in command_group.commands.all
+                            button(onclick=("sendCommand('" + command.name + "')"))=command.name
 
         div.column
             div.row
