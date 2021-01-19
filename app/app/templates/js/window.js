@@ -2,10 +2,10 @@ const commandsVisibleViewport = "width=device-width, initial-scale=1.0";
 const commandsHiddenViewport = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no";
 const blue = "#378afc";
 
+let state = null;
 let screenshotUrl = null;
 let previousMousePosition = null;
 let sendingClickOrDragCommand = false;
-let disableClickAndDragActions = false;
 
 function getScreenshotElement() {
     return document.getElementById("screenshot");
@@ -133,32 +133,32 @@ function eventPrevention(event) {
 }
 
 function mouseDown(event) {
-    if (disableClickAndDragActions) return;
+    if (state.disableClickAndDragActions) return;
     previousMousePosition = getClickedScreenshotPositionAsPercentage(event)
     eventPrevention(event);
 }
 
 function mouseUp(event) {
-    if (disableClickAndDragActions) return;
+    if (state.disableClickAndDragActions) return;
     eventPrevention(event);
     sendCommand(event);
 }
 
 function touchStart(event) {
-    if (disableClickAndDragActions) return;
+    if (state.disableClickAndDragActions) return;
     previousMousePosition = getClickedScreenshotPositionAsPercentage(event.changedTouches.item(0));
     eventPrevention(event);
 }
 
 function touchEnd(event) {
-    if (disableClickAndDragActions) return;
+    if (state.disableClickAndDragActions) return;
     eventPrevention(event);
     sendCommand(event.changedTouches.item(0));
 }
 
-function toggleCommandButtons() {
+function toggleCommandButtons(value = null) {
     const buttons = document.getElementById("command-buttons");
-    buttons.hidden = !buttons.hidden;
+    state.hideCommandButtons = buttons.hidden = value !== null ? value : !state.hideCommandButtons;
 
     const toggleButton = document.getElementById("toggle-commands");
     const viewport = document.querySelector('meta[name="viewport"]');
@@ -175,13 +175,13 @@ function toggleCommandButtons() {
     }
 }
 
-function toggleClickAndDragActions() {
+function toggleClickAndDragActions(value = null) {
     const toggleButton = document.getElementById("toggle-click-and-drag");
     const screenshot = getScreenshotElement();
 
-    disableClickAndDragActions = !disableClickAndDragActions;
+    state.disableClickAndDragActions = value !== null ? value : !state.disableClickAndDragActions;
 
-    if (disableClickAndDragActions) {
+    if (state.disableClickAndDragActions) {
         toggleButton.textContent = "Enable click and drag actions";
         screenshot.style.borderColor = "transparent";
     } else {
@@ -190,7 +190,15 @@ function toggleClickAndDragActions() {
     }
 }
 
+function initializeState() {
+    callWithTryCatch(toggleClickAndDragActions, state.disableClickAndDragActions);
+    callWithTryCatch(toggleCommandButtons, state.hideCommandButtons);
+}
+
 window.onload = () => {
+    state = new WindowState();
+    initializeState();
+
     setScreenShotUrl();
     const imgEventListener = () => showLoader(false);
     const screenshot = getScreenshotElement()
