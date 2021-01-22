@@ -1,6 +1,7 @@
 const DEFAULT_STATE = {
     disableClickAndDragActions: false,
-    hideCommandButtons: false
+    hideCommandButtons: false,
+    disableAutoUpdate: true
 };
 
 class WindowState {
@@ -45,6 +46,10 @@ class WindowState {
         return this.state.hideCommandButtons;
     }
 
+    get disableAutoUpdate() {
+        return this.state.disableAutoUpdate;
+    }
+
     set disableClickAndDragActions(value) {
         this.state.disableClickAndDragActions = value;
         this.storeStateToStorage();
@@ -52,6 +57,11 @@ class WindowState {
 
     set hideCommandButtons(value) {
         this.state.hideCommandButtons = value;
+        this.storeStateToStorage();
+    }
+
+    set disableAutoUpdate(value) {
+        this.state.disableAutoUpdate = value;
         this.storeStateToStorage();
     }
 }

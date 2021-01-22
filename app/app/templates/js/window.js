@@ -6,6 +6,7 @@ let state = null;
 let screenshotUrl = null;
 let previousMousePosition = null;
 let sendingClickOrDragCommand = false;
+let interval = null;
 
 function getScreenshotElement() {
     return document.getElementById("screenshot");
@@ -62,6 +63,14 @@ function getClickedScreenshotPositionAsPercentage(event) {
             // Invert Y coordinate
             clickY: 100 - (event.clientY - rect.top) * yMultiplier / naturalHeight * 100
         }
+    }
+}
+
+function setAutoUpdateInterval(set = true) {
+    if (!state.disableAutoUpdate && set) {
+        interval = setInterval(() => setScreenshotSrc(), 5000);
+    } else if (!set) {
+        clearInterval(interval);
     }
 }
 
@@ -190,9 +199,19 @@ function toggleClickAndDragActions(value = null) {
     }
 }
 
+function toggleAutoUpdate(value = null) {
+    const toggleButton = document.getElementById("toggle-auto-update");
+
+    state.disableAutoUpdate = value !== null ? value : !state.disableAutoUpdate;
+
+    toggleButton.textContent = state.disableAutoUpdate ? "Enable automatic screenshot update" : "Disable automatic screenshot update";
+    setAutoUpdateInterval(!state.disableAutoUpdate);
+}
+
 function initializeState() {
     callWithTryCatch(toggleClickAndDragActions, state.disableClickAndDragActions);
     callWithTryCatch(toggleCommandButtons, state.hideCommandButtons);
+    callWithTryCatch(toggleAutoUpdate, state.disableAutoUpdate);
 }
 
 window.onload = () => {
@@ -206,5 +225,9 @@ window.onload = () => {
     screenshot.addEventListener("load", imgEventListener);
     screenshot.addEventListener("error", imgEventListener);
 
-    window.addEventListener("focus", () => setScreenshotSrc());
+    window.addEventListener("focus", () => {
+        setScreenshotSrc();
+        setAutoUpdateInterval(true);
+    });
+    window.addEventListener("blur", () => setAutoUpdateInterval(false));
 }

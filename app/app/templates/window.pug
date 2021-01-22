@@ -23,6 +23,7 @@ block content
             if window.command_groups.exists
                 button(id="toggle-commands" onclick="toggleCommandButtons()") Hide commands
             button(id="toggle-click-and-drag" onclick="toggleClickAndDragActions()") Disable click and drag actions
+            button(id="toggle-auto-update" onclick="toggleAutoUpdate()") Enable automatic screenshot update
 
     div.row
         if window.command_groups.exists
