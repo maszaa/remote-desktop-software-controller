@@ -18,6 +18,8 @@ block content
                 i.material-icons settings
             a(href="/")
                 i.material-icons menu
+            a(href="#" onclick="setScreenshotSrc()")
+                i.material-icons refresh
             if window.command_groups.exists
                 button(id="toggle-commands" onclick="toggleCommandButtons()") Hide commands
             button(id="toggle-click-and-drag" onclick="toggleClickAndDragActions()") Disable click and drag actions
