@@ -205,4 +205,6 @@ window.onload = () => {
 
     screenshot.addEventListener("load", imgEventListener);
     screenshot.addEventListener("error", imgEventListener);
+
+    window.addEventListener("focus", () => setScreenshotSrc());
 }
