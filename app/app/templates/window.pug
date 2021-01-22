@@ -12,13 +12,13 @@ block content
         div.column.title
             h1.software-window #{window.software.name}: #{window.title}
         div.column.app-controls
-            a(href="/admin/logout/")
+            a(href="/admin/logout/" title="Logout")
                 i.material-icons lock_open
-            a(href="/admin/")
+            a(href="/admin/" title="Settings")
                 i.material-icons settings
-            a(href="/")
+            a(href="/" title="Software window list")
                 i.material-icons menu
-            a(href="#" onclick="setScreenshotSrc()")
+            a(href="#" onclick="setScreenshotSrc()" title="Refresh screenshot")
                 i.material-icons refresh
             if window.command_groups.exists
                 button(id="toggle-commands" onclick="toggleCommandButtons()") Hide commands
