@@ -41,6 +41,7 @@ function setCommandStatus(isOk, status, command, commandOk, commandError) {
 
 function setScreenshotSrc() {
     const screenshotElement = getScreenshotElement();
+    showLoader();
     screenshotElement.src = `${screenshotUrl}?timestamp=${Date.now()}`;
 }
 
@@ -85,7 +86,6 @@ function createForm(command) {
         const {clickX, clickY} = getClickedScreenshotPositionAsPercentage(command);
 
         if (clickX !== previousMousePosition.clickX || clickY !== previousMousePosition.clickY) {
-
             form.set("fromX", previousMousePosition.clickX);
             form.set("fromY", previousMousePosition.clickY);
             form.set("toX", clickX);
