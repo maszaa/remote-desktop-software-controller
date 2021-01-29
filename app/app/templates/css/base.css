@@ -23,7 +23,7 @@ button {
 img {
     margin: 0 5px;
     max-width: 97.5%;
-    border: 1px solid #378afc;
+    border: 1px solid transparent;
 }
 
 #command-ok {
