@@ -9,7 +9,8 @@ a = Analysis(['app\\manage.py'],
              datas=[
                  ('venv\\Lib\\site-packages\\ahk\\templates', 'ahk\\templates'),
                  ('LICENSE', '.'),
-                 ('README.md', '.')
+                 ('README.md', '.'),
+				 ('examples\\glm4.json', 'examples')
              ],
              hiddenimports=[],
              hookspath=[],
