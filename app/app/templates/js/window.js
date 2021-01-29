@@ -6,6 +6,7 @@ let state = null;
 let screenshotUrl = null;
 let previousMousePosition = null;
 let sendingClickOrDragCommand = false;
+let screenshotUpdating = true;
 let interval = null;
 
 function getScreenshotElement() {
@@ -41,6 +42,7 @@ function setCommandStatus(isOk, status, command, commandOk, commandError) {
 
 function setScreenshotSrc() {
     const screenshotElement = getScreenshotElement();
+    screenshotUpdating = true;
     showLoader();
     screenshotElement.src = `${screenshotUrl}?timestamp=${Date.now()}`;
 }
@@ -104,14 +106,22 @@ function createForm(command) {
 }
 
 async function sendCommand(command) {
-    showLoader();
-
     const [commandOk, commandError] = resetCommandStatus();
+
     let form = null;
     [form, command] = createForm(command);
 
     // null-like form means sendingClickOrDragCommand is true
     if (form == null) return;
+
+    // Block click and drag actions while screenshot is updating
+    // 'command' in form means a button command
+    if (!form.get("command") && screenshotUpdating) {
+        setCommandStatus(false, "IGNORED: screenshot updating", command, commandOk, commandError);
+        return;
+    }
+
+    showLoader();
 
     try {
         const response = await fetch(
@@ -219,7 +229,10 @@ window.onload = () => {
     initializeState();
 
     setScreenShotUrl();
-    const imgEventListener = () => showLoader(false);
+    const imgEventListener = () => {
+        showLoader(false);
+        screenshotUpdating = false;
+    };
     const screenshot = getScreenshotElement()
 
     screenshot.addEventListener("load", imgEventListener);
