@@ -3,6 +3,8 @@ from typing import Optional, Tuple, Union
 from ahk import AHK
 from django.conf import settings
 
+from app.validators import float_or_raise
+
 
 class WindowControl:
     def __init__(self, window_title: str) -> "WindowControl":
@@ -129,10 +131,13 @@ class WindowControl:
         :param click_position_x_percentage_from_origin: X position as percentage from window XY origin that should be clicked, defaults to 0
         :param click_position_y_percentage_from_origin: Y position as percentage from window XY origin that should be clicked, defaults to 0
         :return: x, y position in screen to click as tuple
+        :raises ValueError: x or y position can't be converted to float or is nan
         """
         return (
-            x + width * click_position_x_percentage_from_origin / 100,
-            y + (height - height * click_position_y_percentage_from_origin / 100),
+            float_or_raise(x + width * click_position_x_percentage_from_origin / 100),
+            float_or_raise(
+                y + (height - height * click_position_y_percentage_from_origin / 100)
+            ),
         )
 
     def _click_window_position(

@@ -8,6 +8,7 @@ from django.http import HttpRequest, JsonResponse
 from django.views.generic import DetailView
 
 from app.models import Command, Window
+from app.validators import float_or_raise
 from app.window_control import WindowControl
 
 
@@ -34,6 +35,8 @@ class WindowView(LoginRequiredMixin, DetailView):
             self.object = self.get_object()
             self.window_control = WindowControl(self.object.title)
             sent = self._handle_request()
+        except (KeyError, ValueError) as e:
+            return JsonResponse(str(e), status=400, safe=False)
         except Exception as e:
             settings.LOGGER.error(traceback.format_exc())
             return JsonResponse(str(e), status=500, safe=False)
@@ -87,7 +90,9 @@ class WindowView(LoginRequiredMixin, DetailView):
             )
 
             if click_x and click_y:
-                return self.window_control.send_click(float(click_x), float(click_y))
+                return self.window_control.send_click(
+                    float_or_raise(click_x), float_or_raise(click_y)
+                )
             else:
                 from_x, from_y, to_x, to_y = (
                     self.request.POST.get("fromX"),
@@ -98,10 +103,10 @@ class WindowView(LoginRequiredMixin, DetailView):
 
                 if from_x and from_y and to_x and to_y:
                     return self.window_control.send_drag(
-                        float(from_x),
-                        float(from_y),
-                        float(to_x),
-                        float(to_y),
+                        float_or_raise(from_x),
+                        float_or_raise(from_y),
+                        float_or_raise(to_x),
+                        float_or_raise(to_y),
                     )
 
         raise KeyError(
