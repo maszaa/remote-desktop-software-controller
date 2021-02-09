@@ -11,14 +11,33 @@ class WindowControl:
         self.autohotkey = AHK()
         self.window = self.autohotkey.find_window(title=window_title.encode("utf-8"))
 
-        if not self.window:
+        if not self.exists:
             settings.LOGGER.error(f"Window {window_title} not found")
+
+    @property
+    def exists(self) -> bool:
+        """
+        Does the window exist.
+
+        :return: True if does
+        """
+        return self.window is not None and self.window.exist
+
+    @property
+    def size_and_position(self) -> Optional[Tuple[int, int, int, int]]:
+        """
+        Get window width, height and X, Y position.
+
+        :return: Tuple of four ints if window exists
+        """
+        if self.exists:
+            return self.window.rect
 
     def activate(self) -> None:
         """
         Activate window i.e. bring it to front.
         """
-        if self.window:
+        if self.exists:
             self.window.activate()
 
     def send_click(
@@ -31,7 +50,7 @@ class WindowControl:
         :param click_position_y_percentage_from_origin: Y position as percentage from window origin that should be clicked
         :return: True if click was sent to the window
         """
-        if self.window:
+        if self.exists:
             self.activate()
             if (
                 click_position_x_percentage_from_origin is not None
@@ -63,7 +82,7 @@ class WindowControl:
         :param from_position_y_percentage_from_origin: Y position as percentage from window origin to where the mouse drag should end
         :return: True if mouse drag was sent to the window
         """
-        if self.window:
+        if self.exists:
             self.activate()
             if (
                 from_position_x_percentage_from_origin is not None
@@ -97,7 +116,7 @@ class WindowControl:
         :param click_position_y_percentage_from_origin: Y position as percentage from window origin that should be clicked
         :return: True if keys were sent to the window
         """
-        if self.window:
+        if self.exists:
             self.activate()
             if (
                 click_position_x_percentage_from_origin is not None
@@ -153,7 +172,7 @@ class WindowControl:
         :return: x, y position in screen that was clicked as tuple
         """
         click_x, click_y = self._calculate_click_position(
-            *self.window.rect,
+            *self.size_and_position,
             click_position_x_percentage_from_origin,
             click_position_y_percentage_from_origin,
         )
@@ -181,7 +200,7 @@ class WindowControl:
         :param from_position_y_percentage_from_origin: Y position as percentage from window origin to where the mouse drag should end
         :return: drag position from x, y to x, y as tuple
         """
-        rect = self.window.rect
+        rect = self.size_and_position
         from_x, from_y = self._calculate_click_position(
             *rect,
             from_position_x_percentage_from_origin,

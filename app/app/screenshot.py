@@ -2,7 +2,6 @@ import io
 from typing import Optional
 
 import pyautogui
-import win32gui
 from django.conf import settings
 from PIL import Image
 
@@ -20,14 +19,10 @@ class Screenshot:
 
         :return: screenshot image as bytes if screenshot was captured
         """
-        self.window_control.activate()
-        hwnd = win32gui.FindWindow(None, self.window_title)
+        if self.window_control.exists:
+            self.window_control.activate()
 
-        if hwnd:
-            x, y, x1, y1 = win32gui.GetClientRect(hwnd)
-            x, y = win32gui.ClientToScreen(hwnd, (x, y))
-            x1, y1 = win32gui.ClientToScreen(hwnd, (x1 - x, y1 - y))
-            image = pyautogui.screenshot(region=(x, y, x1, y1))
+            image = pyautogui.screenshot(region=self.window_control.size_and_position)
 
             if not image:
                 return None
