@@ -169,42 +169,42 @@ function toggleCommandButtons(value = null) {
     const buttons = document.getElementById("command-buttons");
     state.hideCommandButtons = buttons.hidden = value !== null ? value : !state.hideCommandButtons;
 
-    const toggleButton = document.getElementById("toggle-commands");
+    const checkbox = document.getElementById("hide-commands");
     const viewport = document.querySelector('meta[name="viewport"]');
     const modeDisclaimer = document.getElementById("mode-disclaimer");
 
     if (!buttons.hidden) {
         viewport.content = commandsVisibleViewport;
-        toggleButton.textContent = "Hide commands";
+        checkbox.checked = false;
         modeDisclaimer.hidden = true;
     } else {
         viewport.content = commandsHiddenViewport;
-        toggleButton.textContent = "Show commands";
+        checkbox.checked = true;
         modeDisclaimer.hidden = false;
     }
 }
 
 function toggleClickAndDragActions(value = null) {
-    const toggleButton = document.getElementById("toggle-click-and-drag");
+    const checkbox = document.getElementById("disable-click-drag");
     const screenshot = getScreenshotElement();
 
     state.disableClickAndDragActions = value !== null ? value : !state.disableClickAndDragActions;
 
     if (state.disableClickAndDragActions) {
-        toggleButton.textContent = "Enable click and drag actions";
+        checkbox.checked = true;
         screenshot.style.borderColor = "transparent";
     } else {
-        toggleButton.textContent = "Disable click and drag actions";
+        checkbox.checked = false;
         screenshot.style.borderColor = blue;
     }
 }
 
 function toggleAutoUpdate(value = null) {
-    const toggleButton = document.getElementById("toggle-auto-update");
+    const checkbox = document.getElementById("disable-screenshot-update");
 
     state.disableAutoUpdate = value !== null ? value : !state.disableAutoUpdate;
 
-    toggleButton.textContent = state.disableAutoUpdate ? "Enable automatic screenshot update" : "Disable automatic screenshot update";
+    checkbox.checked = state.disableAutoUpdate ? true : false;
     setAutoUpdateInterval(!state.disableAutoUpdate);
 }
 

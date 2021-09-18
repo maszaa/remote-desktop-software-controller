@@ -11,19 +11,6 @@ block content
     div.row
         div.column.title
             h1.software-window #{window.software.name}: #{window.title}
-        div.column.app-controls
-            a(href="/admin/logout/" title="Logout")
-                i.material-icons lock_open
-            a(href="/admin/" title="Settings")
-                i.material-icons settings
-            a(href="/" title="Software window list")
-                i.material-icons menu
-            a(href="#" onclick="setScreenshotSrc()" title="Refresh screenshot")
-                i.material-icons refresh
-            if window.command_groups.exists
-                button(id="toggle-commands" onclick="toggleCommandButtons()") Hide commands
-            button(id="toggle-click-and-drag" onclick="toggleClickAndDragActions()") Disable click and drag actions
-            button(id="toggle-auto-update" onclick="toggleAutoUpdate()") Enable automatic screenshot update
 
     div.row
         if window.command_groups.exists
@@ -58,3 +45,30 @@ block content
                 span#command-error
 
             p#mode-disclaimer(hidden) * Zooming with mobile devices is disabled in screenshot-only mode
+
+    div.row
+        div.column.app-controls
+            h4 SETTINGS
+
+            p
+                if window.command_groups.exists
+                    input(type="checkbox" id="hide-commands" name="hide-commands" onclick="toggleCommandButtons()")
+                    label(for="hide-commands" onclick="toggleCommandButtons()") Hide commands
+                    br
+
+                input(type="checkbox" id="disable-screenshot-update" name="disable-screenshot-update" onclick="toggleAutoUpdate()")
+                label(for="disable-screenshot-update") Disable automatic screenshot update
+                br
+
+                input(type="checkbox" id="disable-click-drag" name="disable-click-drag" onclick="toggleClickAndDragActions()")
+                label(for="disable-click-drag") Disable click and drag actions
+
+            p
+                a(href="/admin/logout/" title="Logout")
+                    i.material-icons lock_open
+                a(href="/admin/" title="Settings")
+                    i.material-icons settings
+                a(href="/" title="Software window list")
+                    i.material-icons menu
+                a(href="#" onclick="setScreenshotSrc()" title="Refresh screenshot")
+                    i.material-icons refresh
