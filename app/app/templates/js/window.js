@@ -208,10 +208,25 @@ function toggleAutoUpdate(value = null) {
     setAutoUpdateInterval(!state.disableAutoUpdate);
 }
 
+function toggleScrollToTopOnFocus(value = null) {
+    const checkbox = document.getElementById("disable-scroll-top-focus");
+
+    state.disableScrollToTopOnFocus = value !== null ? value : !state.disableScrollToTopOnFocus;
+
+    checkbox.checked = state.disableScrollToTopOnFocus ? true : false;
+}
+
+function scrollToTopOnFocus() {
+    if (!state.disableScrollToTopOnFocus) {
+        window.scrollTo(0, 0);
+    }
+}
+
 function initializeState() {
     callWithTryCatch(toggleClickAndDragActions, state.disableClickAndDragActions);
     callWithTryCatch(toggleCommandButtons, state.hideCommandButtons);
     callWithTryCatch(toggleAutoUpdate, state.disableAutoUpdate);
+    callWithTryCatch(toggleScrollToTopOnFocus, state.disableScrollToTopOnFocus);
 }
 
 window.onload = () => {
@@ -228,6 +243,7 @@ window.onload = () => {
     window.addEventListener("focus", () => {
         setScreenshotSrc();
         setAutoUpdateInterval(true);
+        scrollToTopOnFocus();
     });
     window.addEventListener("blur", () => setAutoUpdateInterval(false));
 }

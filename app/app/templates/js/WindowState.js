@@ -1,7 +1,8 @@
 const DEFAULT_STATE = {
     disableClickAndDragActions: false,
     hideCommandButtons: false,
-    disableAutoUpdate: true
+    disableAutoUpdate: true,
+    disableScrollToTopOnFocus: true,
 };
 
 class WindowState {
@@ -50,6 +51,10 @@ class WindowState {
         return this.state.disableAutoUpdate;
     }
 
+    get disableScrollToTopOnFocus() {
+        return this.state.disableScrollToTopOnFocus;
+    }
+
     set disableClickAndDragActions(value) {
         this.state.disableClickAndDragActions = value;
         this.storeStateToStorage();
@@ -62,6 +67,11 @@ class WindowState {
 
     set disableAutoUpdate(value) {
         this.state.disableAutoUpdate = value;
+        this.storeStateToStorage();
+    }
+
+    set disableScrollToTopOnFocus(value) {
+        this.state.disableScrollToTopOnFocus = value;
         this.storeStateToStorage();
     }
 }
