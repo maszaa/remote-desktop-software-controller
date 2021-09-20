@@ -1,7 +1,10 @@
 ahk==0.12.0
-Django==3.1.5
+Django>=3.2.7,<=3.2.99
 PyAutoGUI==0.9.52
 pywin32==300
 pypugjs==5.9.8
 waitress==1.4.4
 whitenoise==5.2.0
+pillow>=8.3.2,<=8.3.99
+wheel>=0.37.0,<=0.37.99
+pip>=21.2.4,<=21.2.99
